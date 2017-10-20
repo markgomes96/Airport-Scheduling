@@ -3,5 +3,6 @@
 !.gitignore
 !.md
 !*.java
+!*.cs
 
 !*/
