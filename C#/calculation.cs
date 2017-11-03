@@ -20,13 +20,12 @@ public class Calc
             double dlongit = longit2 - longit1;
             //Given equitorial radius constant in miles
             double R = 3959.999;
-            double temp = Math.Pow((Math.Sin((dlat / 2)) * (180.0 / Math.PI)), 2) + ((Math.Cos(lat1) * (180.0 / Math.PI)) * 
-                          (Math.Cos(lat2) * (180.0 / Math.PI)) * Math.Pow((Math.Sin(dlongit / 2) * (180.0 / Math.PI)), 2));
-            double degrees = Math.Asin(Math.Sqrt(temp)); //* (180.0 / Math.PI);
+            //Had to convert to Radians
+            double temp = Math.Pow((Math.Sin((dlat / 2) * (Math.PI / 180.0))), 2) + ((Math.Cos(lat1 * (Math.PI / 180.0))) * 
+                          (Math.Cos(lat2 * (Math.PI / 180.0))) * Math.Pow((Math.Sin((dlongit / 2) * (Math.PI / 180.0))), 2));
+            double radian = Math.Asin(Math.Sqrt(temp)); //* (180.0 / Math.PI);
             //Calculates the distance between geographic coordinates
-            double d = 2 * R * degrees;
-            Console.WriteLine("Might Need to convert to Degrees not Radians...");
-            Console.WriteLine(Math.Pow(Math.Sin(dlat/2),2));
+            double d = 2 * R * radian;
             Console.WriteLine("delta Lat = " + dlat);
             Console.WriteLine("delta Long = " + dlongit);
             Console.WriteLine("Temp = " + temp);
