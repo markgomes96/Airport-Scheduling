@@ -15,6 +15,16 @@ public class reader {
 
 		Console.WriteLine(a.Speed);
 
+
+		string url = "http://theochem.mercer.edu/csc330/data/airports.csv";
+		WebReader wr = new WebReader(url);
+		string line = wr.getLine();
+		while(line != null) {
+			Console.WriteLine(line);
+			line = wr.getLine();
+		}
+
+
 	}
 }
 
