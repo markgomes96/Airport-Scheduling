@@ -1,7 +1,5 @@
 
 using System;
-using System.Collections;
-
 
 /*---------------------------------------------------------
 * The Geolocator class provides several static methods
@@ -24,6 +22,8 @@ public class Geolocator {
 		//   given to us by Dr. Pounds.
 		//   Refer to 'calculation.cs' for a working demo
 		//
+
+		return -1.0;
 	}
 
 
@@ -43,13 +43,12 @@ public class Geolocator {
 	*--------------------------------------------------------*/
 	public static string findCoords(string city, string statecode) {
 
-		// 2 ArrayLists to store the coordinates
-		// for every zip code in the requested city
-		ArrayList lats = new ArrayList();
-		ArrayList longs = new ArrayList();
+		double latSum = 0.0;
+		double longSum = 0.0;
+		int count = 0;
 
 		// read through the .csv file
-		// and save the coordinates where the
+		// and sum the coordinates where the
 		// city and statenames match
 		string url = "http://theochem.mercer.edu/csc330/data/zip_codes_states.csv";
 		WebReader reader = new WebReader(url);
@@ -57,23 +56,14 @@ public class Geolocator {
 		while(line != null) {
 			string[] columns = line.Split(',');
 			if(columns[3].Contains(city) && columns[4].Contains(statecode)) {
-				lats.Add( Double.Parse(columns[1]) );
-				longs.Add( Double.Parse(columns[2]) );
+				latSum += Double.Parse(columns[1]);
+				longSum += Double.Parse(columns[2]);
+				count++;
 			}
 			line = reader.getLine();
 		}
 
-		// average the lats and longs
-		double latSum = 0.0;
-		double longSum = 0.0;
-		foreach(double x in lats) {
-			latSum += x;
-		}
-		foreach(double x in longs) {
-			longSum += x;
-		}
-
-		return (latSum/lats.Count) + ", " + (longSum/longs.Count);
+		return (latSum/count) + ", " + (longSum/count);
 	}
 
 }
