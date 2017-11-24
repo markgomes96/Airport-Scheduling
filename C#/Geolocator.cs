@@ -40,6 +40,7 @@ public class Geolocator {
 	* 
 	* Returns: A string with the lat and long separated
 	*          by a comma.
+	*          Returns '-1, -1' if the city is not found.
 	*--------------------------------------------------------*/
 	public static string findCoords(string city, string statecode) {
 
@@ -63,6 +64,8 @@ public class Geolocator {
 			line = reader.getLine();
 		}
 
+		if(count==0) 
+			return "-1, -1";
 		return (latSum/count) + ", " + (longSum/count);
 	}
 
