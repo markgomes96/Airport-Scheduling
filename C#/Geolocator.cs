@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 
 /*---------------------------------------------------------
  * The Geolocator class provides several static methods
@@ -13,7 +14,7 @@ public class Geolocator {
 	 *
 	 * Purpose: Calculates the distance between two given coords
 	 *
-	 * Returns: A 'double' value of the distance
+	 * Returns: A 'double' value of the distance in miles
 	 *--------------------------------------------------------*/
 	public static double getDistance(double lat1, double long1, double lat2, double long2) {
 
@@ -140,3 +141,14 @@ public class Geolocator {
 
 }
 
+public struct Location {
+	public double latitude, longitude;
+	public string city, state;
+
+	public Location(double lat, double lon, string city, string state) {
+		this.latitude = lat;
+		this.longitude = lat;
+		this.city = city;
+		this.state = state;
+	}
+}
