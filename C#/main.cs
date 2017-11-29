@@ -1,8 +1,4 @@
 
-// Referenced:
-//     https://stackoverflow.com/questions/10826260/is-there-a-way-to-read-from-a-website-one-line-at-a-time
-//
-
 using System;
 using System.IO;
 using System.Net;

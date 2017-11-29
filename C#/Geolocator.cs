@@ -75,7 +75,14 @@ public class Geolocator {
 	}
 
 
-	public static List<Airport> CreateAirportDatabase()      //creates a database of all usable airports
+	/*---------------------------------------------------------
+	 * Method: CreateAirportDatabase
+	 *
+	 * Purpose: Find all usable airports
+	 *
+	 * Returns: A list of all usable airport objects
+	 *--------------------------------------------------------*/
+	public static List<Airport> CreateAirportDatabase()
 	{
 		List<Airport> apdb = new List<Airport>();    //list of airport objects to store all usable airports
 
