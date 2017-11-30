@@ -4,6 +4,7 @@ public class Passenger {
 
 	public string firstname, lastname;
 	public Location origin, destination;
+	public double distance, price;
 
 	public Passenger() {
 		this.firstname = null;
@@ -25,5 +26,8 @@ public class Passenger {
 		this.lastname = l;
 		this.origin = Geolocator.findCoords(c0, s0);
 		this.destination = Geolocator.findCoords(c1, s1);
+
+		this.distance = Geolocator.getDistance(this.origin, this.destination);
+		this.price = this.distance*1.25;
 	}
 }

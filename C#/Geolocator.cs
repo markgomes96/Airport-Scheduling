@@ -31,7 +31,9 @@ public class Geolocator {
 		double d = 2 * R * radian;
 		return d;
 	}
-
+	public static double getDistance(Location pos1, Location pos2) {
+		return getDistance(pos1.latitude, pos1.longitude, pos2.latitude, pos2.longitude);
+	}
 
 	/*---------------------------------------------------------
 	 * Method: findCoords

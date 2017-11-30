@@ -16,6 +16,9 @@ public class reader {
         Console.WriteLine("destination:");
         Console.WriteLine("\t" + p.destination.city + ", " + p.destination.state);
         Console.WriteLine("\t" + p.destination.latitude + ", " + p.destination.longitude);
+        Console.WriteLine("ticket:");
+        Console.WriteLine("\tdistance: " + p.distance + " miles");
+        Console.WriteLine("\tprice: $" + p.price);
     }
 }
 
