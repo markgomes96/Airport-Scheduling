@@ -12,6 +12,18 @@ public class main {
 		}
 	}
 
+	static public List<Passenger> readCSV() {
+		List<Passenger> people = new List<Passenger>();
+
+		//
+		// TODO:
+		//    Implement CSV reader to populate a list of 
+		//    potential passengers.
+		//
+
+		return people;
+	}
+
 	static public List<Passenger> getPassengers() {
 		List<Passenger> people = new List<Passenger>();
 
