@@ -35,14 +35,42 @@ public class reader {
                         user.firstname = Console.ReadLine();
                         Console.Write("Last Name: ");
                         user.lastname = Console.ReadLine();
-                        Console.Write("Origination City: ");
-                        user.origin.city = Console.ReadLine();
-                        Console.Write("Origination State (two letter code): ");
-                        user.origin.state = Console.ReadLine();
-                        Console.Write("Destination City: ");
-                        user.destination.city = Console.ReadLine();
-                        Console.Write("Destination State (two letter code): ");
-                        user.destination.state = Console.ReadLine();
+                        while(user.origin.latitude == -1 && user.origin.longitude == -1)  //Not valid origin city
+                        {
+                              Console.Write("Origination City: ");
+                              user.origin.city = Console.ReadLine();
+                              if(user.origin.latitude == -1 && user.origin.longitude == -1) //City name not on file
+                              {
+                                    Console.WriteLine("\t ***City Name Not on File ***");
+                              }
+                        }
+                        while(user.origin.latitude == -1 && user.origin.longitude == -1)  //Not valid origin state
+                        {
+                              Console.Write("Origination State (two letter code): ");
+                              user.origin.state = Console.ReadLine();
+                              if(user.origin.latitude == -1 && user.origin.longitude == -1)  //State code invalid
+                              {
+                                    Console.WriteLine("\t *** Please select a correct state code ***");
+                              }
+                        }
+                        while(user.destination.latitude == -1 && user.destination.longitude == -1)  //Not valid destination city
+                        {
+                              Console.Write("Destination City: ");
+                              user.destination.city = Console.ReadLine();
+                              if(user.destination.latitude == -1 && user.destination.longitude == -1)  //City name not on file
+                              {
+                                    Console.WriteLine("\t ***City Name Not on File ***");
+                              }
+                        }
+                        while(user.destination.latitude == -1 && user.destination.longitude == -1)  //Destination state code invalid
+                        {
+                              Console.Write("Destination State (two letter code): ");
+                              user.destination.state = Console.ReadLine();
+                              if(user.destination.latitude == -1 && user.destination.longitude == -1)  //State code invalid
+                              {
+                                    Console.WriteLine("\t *** Please select a correct state code ***");
+                              }
+                        }
                         Console.WriteLine();
                   }
                   else if(choice == "N" || choice == "n")  //User done adding passengers
