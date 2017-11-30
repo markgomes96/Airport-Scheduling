@@ -30,4 +30,12 @@ public class Passenger {
 		this.distance = Geolocator.getDistance(this.origin, this.destination);
 		this.price = this.distance*1.25;
 	}
+
+	public override string ToString() {
+		string result = this.firstname + " " + this.lastname + " | ";
+		result += this.origin.city + ", " + this.origin.state + " --> ";
+		result += this.destination.city + ", " + this.destination.state + " | ";
+		result += this.distance + " miles | $" + this.price;
+		return result;
+	}
 }
