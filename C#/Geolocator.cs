@@ -65,9 +65,11 @@ public class Geolocator {
 		while(line != null) {
 			string[] columns = line.Split(',');
 			if(columns[3].Contains(city) && columns[4].Contains(statecode)) {
-				latSum += Double.Parse(columns[1]);
-				longSum += Double.Parse(columns[2]);
-				count++;
+				try {
+					latSum += Double.Parse(columns[1]);
+					longSum += Double.Parse(columns[2]);
+					count++;
+				} catch (FormatException) {}
 			}
 			line = reader.getLine();
 		}

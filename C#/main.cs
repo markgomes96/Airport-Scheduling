@@ -1,89 +1,61 @@
 
 using System;
-using System.IO;
-using System.Net;
+using System.Collections.Generic;
 
 
-public class reader {
-    static public void Main() {
+public class main {
 
-		Passenger p = new Passenger("Jules", "Winnfield", "Memphis", "TN", "Atlanta", "GA");
-        Console.WriteLine("name:");
-        Console.WriteLine("\t" + p.firstname + " " + p.lastname);
-        Console.WriteLine("origin:");
-        Console.WriteLine("\t" + p.origin.city + ", " + p.origin.state);
-        Console.WriteLine("\t" + p.origin.latitude + ", " + p.origin.longitude);
-        Console.WriteLine("destination:");
-        Console.WriteLine("\t" + p.destination.city + ", " + p.destination.state);
-        Console.WriteLine("\t" + p.destination.latitude + ", " + p.destination.longitude);
-        Console.WriteLine("ticket:");
-        Console.WriteLine("\tdistance: " + p.distance + " miles");
-        Console.WriteLine("\tprice: $" + p.price);
-    }
-      static public void userInput() {
-            bool flight = true;
-            string choice;
-            Passenger user = new Passenger();
-            Console.WriteLine("Flight Itinerary Builder Program \n");
-            while(flight == true)
-            {
-                  Console.Write("Do you want to add a passenger to your itinerary list (Y/N)? ");
-                  choice = Console.ReadLine();
-                  if(choice == "Y" || choice == "y")  //User wants to add passenger
-                  {
-                        Console.Write("First Name: ");
-                        user.firstname = Console.ReadLine();
-                        Console.Write("Last Name: ");
-                        user.lastname = Console.ReadLine();
-                        while(user.origin.latitude == -1 && user.origin.longitude == -1)  //Not valid origin city
-                        {
-                              Console.Write("Origination City: ");
-                              user.origin.city = Console.ReadLine();
-                              if(user.origin.latitude == -1 && user.origin.longitude == -1) //City name not on file
-                              {
-                                    Console.WriteLine("\t ***City Name Not on File ***");
-                              }
-                        }
-                        while(user.origin.latitude == -1 && user.origin.longitude == -1)  //Not valid origin state
-                        {
-                              Console.Write("Origination State (two letter code): ");
-                              user.origin.state = Console.ReadLine();
-                              if(user.origin.latitude == -1 && user.origin.longitude == -1)  //State code invalid
-                              {
-                                    Console.WriteLine("\t *** Please select a correct state code ***");
-                              }
-                        }
-                        while(user.destination.latitude == -1 && user.destination.longitude == -1)  //Not valid destination city
-                        {
-                              Console.Write("Destination City: ");
-                              user.destination.city = Console.ReadLine();
-                              if(user.destination.latitude == -1 && user.destination.longitude == -1)  //City name not on file
-                              {
-                                    Console.WriteLine("\t ***City Name Not on File ***");
-                              }
-                        }
-                        while(user.destination.latitude == -1 && user.destination.longitude == -1)  //Destination state code invalid
-                        {
-                              Console.Write("Destination State (two letter code): ");
-                              user.destination.state = Console.ReadLine();
-                              if(user.destination.latitude == -1 && user.destination.longitude == -1)  //State code invalid
-                              {
-                                    Console.WriteLine("\t *** Please select a correct state code ***");
-                              }
-                        }
-                        Console.WriteLine();
-                  }
-                  else if(choice == "N" || choice == "n")  //User done adding passengers
-                  {
-                        flight = false;
-                        Console.WriteLine();
-                        Console.WriteLine("** Generating Itinerary **");
-                  }
-                  else  //User input is wrong
-                  {
-                        Console.WriteLine("\t *** Please Type Y or N ***");
-                  }
-            }
-      }
+	static public void Main() {
+		List<Passenger> people = getPassengers();
+		foreach (Passenger p in people) {
+			Console.WriteLine(p);
+		}
+	}
+
+	static public List<Passenger> getPassengers() {
+		List<Passenger> people = new List<Passenger>();
+
+		Console.Clear();
+		Console.WriteLine("Flight Itinerary Builder Program \n");
+		Console.Write("Do you want to add a passenger to your itinerary list (Y/N)? ");
+		string line = Console.ReadLine();
+		while(line.ToLower().Equals("y")) {
+			Console.Write("First Name: ");
+			string fname = Console.ReadLine();
+			Console.Write("Last Name: ");
+			string lname = Console.ReadLine();
+
+			Location opos = new Location(-1, -1, "", "");
+			while(opos.latitude == -1) {
+				Console.Write("Origination City: ");
+				string ocity = Console.ReadLine();
+				Console.Write("Origination State (two letter code): ");
+				string ostate = Console.ReadLine();
+				opos = Geolocator.findCoords(ocity, ostate);
+				if(opos.latitude == -1)
+					Console.WriteLine("\t ***CITY NOT ON FILE***");
+			} 
+
+			Location dpos = new Location(-1, -1, "", "");
+			while(dpos.latitude == -1) {
+				Console.Write("Destination City: ");
+				string dcity = Console.ReadLine();
+				Console.Write("Destination State (two letter code): ");
+				string dstate = Console.ReadLine();
+				dpos = Geolocator.findCoords(dcity, dstate);
+				if(dpos.latitude == -1)
+					Console.WriteLine("\t ***CITY NOT ON FILE***");
+			}
+
+			Passenger p = new Passenger(fname, lname, opos, dpos);
+			people.Add(p);
+
+			Console.Write("Do you want to add a passenger to your itinerary list (Y/N)? ");
+			line = Console.ReadLine();
+		}
+		Console.WriteLine("** GENERATING ITINERARY **");
+		return people;
+	}
 }
+
 

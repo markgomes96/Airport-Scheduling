@@ -26,7 +26,14 @@ public class Passenger {
 		this.lastname = l;
 		this.origin = Geolocator.findCoords(c0, s0);
 		this.destination = Geolocator.findCoords(c1, s1);
-
+		this.distance = Geolocator.getDistance(this.origin, this.destination);
+		this.price = this.distance*1.25;
+	}
+	public Passenger(string f, string l, Location opos, Location dpos) {
+		this.firstname = f;
+		this.lastname = l;
+		this.origin = opos;
+		this.destination = dpos;
 		this.distance = Geolocator.getDistance(this.origin, this.destination);
 		this.price = this.distance*1.25;
 	}
