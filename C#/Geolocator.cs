@@ -151,7 +151,7 @@ public struct Location {
 
 	public Location(double lat, double lon, string city, string state) {
 		this.latitude = lat;
-		this.longitude = lat;
+		this.longitude = lon;
 		this.city = city;
 		this.state = state;
 	}
