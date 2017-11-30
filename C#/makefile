@@ -1,7 +1,7 @@
 
 all: main.exe
 
-main.exe: main.cs WebReader.cs Geolocator.cs airplane.cs airport.cs
+main.exe: main.cs WebReader.cs Geolocator.cs Airplane.cs Airport.cs Passenger.cs
 	mcs $^
 
 clean:

@@ -7,13 +7,15 @@ using System.Net;
 public class reader {
     static public void Main() {
 
-        Airplane a = new Airplane(500, 0, 3000, 3000, new[] {""}, 0, 10, new[] {""});
-
-        Console.WriteLine(a.Speed);
-
-
-        Console.WriteLine("Finding coordinates of 'Memphis, TN'...");
-        Console.WriteLine(Geolocator.findCoords("Memphis", "TN"));
+		Passenger p = new Passenger("Jules", "Winnfield", "Memphis", "TN", "Atlanta", "GA");
+        Console.WriteLine("name:");
+        Console.WriteLine("\t" + p.firstname + " " + p.lastname);
+        Console.WriteLine("origin:");
+        Console.WriteLine("\t" + p.origin.city + ", " + p.origin.state);
+        Console.WriteLine("\t" + p.origin.latitude + ", " + p.origin.longitude);
+        Console.WriteLine("destination:");
+        Console.WriteLine("\t" + p.destination.city + ", " + p.destination.state);
+        Console.WriteLine("\t" + p.destination.latitude + ", " + p.destination.longitude);
     }
 }
 

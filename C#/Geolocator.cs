@@ -44,11 +44,11 @@ public class Geolocator {
 	 *   city - a string containing the name of the city
 	 *   statecode - the 2-letter abbreviation for the state
 	 * 
-	 * Returns: A string with the lat and long separated
-	 *          by a comma.
-	 *          Returns '-1, -1' if the city is not found.
+	 * Returns: A Location object.
+	 *          Returns '-1, -1' as coords if the city 
+	 *          is not found.
 	 *--------------------------------------------------------*/
-	public static string findCoords(string city, string statecode) {
+	public static Location findCoords(string city, string statecode) {
 
 		double latSum = 0.0;
 		double longSum = 0.0;
@@ -71,8 +71,8 @@ public class Geolocator {
 		}
 
 		if(count==0) 
-			return "-1, -1";
-		return (latSum/count) + ", " + (longSum/count);
+			return new Location(-1.0, -1.0, city, statecode);
+		return new Location((latSum/count), (longSum/count), city, statecode);
 	}
 
 
