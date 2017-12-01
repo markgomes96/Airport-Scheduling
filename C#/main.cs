@@ -1,25 +1,40 @@
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 
 public class main {
 
-	static public void Main() {
-		List<Passenger> people = getPassengers();
+	static public void Main(string[] args) {
+		
+		List<Passenger> people;
+		if(args.Length > 0)
+			people = readCSV(args[0]);
+		else
+			people = getPassengers();
+		
 		foreach (Passenger p in people) {
 			Console.WriteLine(p);
 		}
 	}
 
-	static public List<Passenger> readCSV() {
+	static public List<Passenger> readCSV(string filename) {
+
 		List<Passenger> people = new List<Passenger>();
 
-		//
-		// TODO:
-		//    Implement CSV reader to populate a list of 
-		//    potential passengers.
-		//
+		if(!File.Exists(filename)) {
+			Console.WriteLine("File: '" + filename + "' not found!\nQuitting...");
+			return people;
+		}
+		Console.WriteLine("Reading possible customers from '" + filename +"'");
+
+		System.IO.StreamReader infile = new System.IO.StreamReader(filename);
+		string line;
+		while( (line = infile.ReadLine()) != null) {
+			string[] attrib = line.Split(',');
+			people.Add( new Passenger(attrib[0], attrib[1], attrib[2], attrib[3], attrib[4], attrib[5]) );
+		}
 
 		return people;
 	}
