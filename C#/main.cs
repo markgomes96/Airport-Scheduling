@@ -1,30 +1,88 @@
 
-// Referenced:
-//     https://stackoverflow.com/questions/10826260/is-there-a-way-to-read-from-a-website-one-line-at-a-time
-//
-
 using System;
 using System.IO;
-using System.Net;
+using System.Collections.Generic;
 
 
-public class reader {
-	static public void Main() {
+public class main {
 
-		Airplane a = new Airplane(500, 0, 3000, 3000, new[] {""}, 0, 10, new[] {""});
+	static public void Main(string[] args) {
+		
+		List<Passenger> people;
+		if(args.Length > 0)
+			people = readCSV(args[0]);
+		else
+			people = getPassengers();
+		
+		foreach (Passenger p in people) {
+			Console.WriteLine(p);
+		}
+	}
 
-		Console.WriteLine(a.Speed);
+	static public List<Passenger> readCSV(string filename) {
 
+		List<Passenger> people = new List<Passenger>();
 
-		string url = "http://theochem.mercer.edu/csc330/data/airports.csv";
-		WebReader wr = new WebReader(url);
-		string line = wr.getLine();
-		while(line != null) {
-			Console.WriteLine(line);
-			line = wr.getLine();
+		if(!File.Exists(filename)) {
+			Console.WriteLine("File: '" + filename + "' not found!\nQuitting...");
+			return people;
+		}
+		Console.WriteLine("Reading possible customers from '" + filename +"'");
+
+		System.IO.StreamReader infile = new System.IO.StreamReader(filename);
+		string line;
+		while( (line = infile.ReadLine()) != null) {
+			string[] attrib = line.Split(',');
+			people.Add( new Passenger(attrib[0], attrib[1], attrib[2], attrib[3], attrib[4], attrib[5]) );
 		}
 
+		return people;
+	}
 
+	static public List<Passenger> getPassengers() {
+		List<Passenger> people = new List<Passenger>();
+
+		Console.Clear();
+		Console.WriteLine("Flight Itinerary Builder Program \n");
+		Console.Write("Do you want to add a passenger to your itinerary list (Y/N)? ");
+		string line = Console.ReadLine();
+		while(line.ToLower().Equals("y")) {
+			Console.Write("First Name: ");
+			string fname = Console.ReadLine();
+			Console.Write("Last Name: ");
+			string lname = Console.ReadLine();
+
+			Location opos = new Location(-1, -1, "", "");
+			while(opos.latitude == -1) {
+				Console.Write("Origination City: ");
+				string ocity = Console.ReadLine();
+				Console.Write("Origination State (two letter code): ");
+				string ostate = Console.ReadLine();
+				opos = Geolocator.findCoords(ocity, ostate);
+				if(opos.latitude == -1)
+					Console.WriteLine("\t ***CITY NOT ON FILE***");
+			} 
+
+			Location dpos = new Location(-1, -1, "", "");
+			while(dpos.latitude == -1) {
+				Console.Write("Destination City: ");
+				string dcity = Console.ReadLine();
+				Console.Write("Destination State (two letter code): ");
+				string dstate = Console.ReadLine();
+				dpos = Geolocator.findCoords(dcity, dstate);
+				if(dpos.latitude == -1)
+					Console.WriteLine("\t ***CITY NOT ON FILE***");
+			}
+
+			Passenger p = new Passenger(fname, lname, opos, dpos);
+			people.Add(p);
+
+			Console.Write("Do you want to add a passenger to your itinerary list (Y/N)? ");
+			line = Console.ReadLine();
+		}
+		Console.WriteLine("** GENERATING ITINERARY **");
+		return people;
 	}
 }
+
 
