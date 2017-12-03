@@ -10,7 +10,7 @@ public class Node {
 	public double distance;
 	public Node previous;
 
-	public Node(Airport port = new Airport()) {
+	public Node(Airport port = null) {
 		this.airport = port;
 		this.neighbors = new List<Node>();
 		this.weights = new List<double>();
