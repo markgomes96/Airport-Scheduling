@@ -3,23 +3,15 @@ using System.Collections.Generic;
 
 public class Node {
 
-	public Location position;
+	public Airport airport;
 	public List<Node> neighbors;
 	public List<double> weights;
 	public bool visited;
 	public double distance;
 	public Node previous;
 
-	public Node() {
-		this.position = new Location();
-		this.neighbors = new List<Node>();
-		this.weights = new List<double>();
-		this.visited = false;
-		this.distance = 99999.9;
-		this.previous = null;
-	}
-	public Node(Location pos) {
-		this.position = pos;
+	public Node(Airport port = new Airport()) {
+		this.airport = port;
 		this.neighbors = new List<Node>();
 		this.weights = new List<double>();
 		this.visited = false;

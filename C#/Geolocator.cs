@@ -87,7 +87,7 @@ public class Geolocator {
 	 *
 	 * Returns: A list of all usable airport objects
 	 *--------------------------------------------------------*/
-	public static List<Airport> CreateAirportDatabase()
+/*	public static List<Airport> CreateAirportDatabase()
 	{
 		List<Airport> apdb = new List<Airport>();    //list of airport objects to store all usable airports
 
@@ -142,6 +142,7 @@ public class Geolocator {
 		}
 		return apdb;
 	}
+*/
 
 }
 
