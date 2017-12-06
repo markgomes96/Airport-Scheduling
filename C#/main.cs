@@ -16,7 +16,7 @@ public class main {
 		
 		foreach (Passenger p in people) {
 			Console.WriteLine(p);
-		}
+		} 
 	}
 
 	static public List<Passenger> readCSV(string filename) {
