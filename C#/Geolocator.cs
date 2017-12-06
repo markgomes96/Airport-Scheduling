@@ -9,7 +9,7 @@ using System.Collections.Generic;
  *--------------------------------------------------------*/
 public class Geolocator {
 
-<<<<<<< HEAD
+
     /*---------------------------------------------------------
      * Method: findNearestAirport
      *
@@ -203,7 +203,7 @@ public class Geolocator {
         }
         return apdb;
     }*/
-=======
+
 	/*---------------------------------------------------------
 	 * Method: getDistance
 	 *
