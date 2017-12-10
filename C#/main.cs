@@ -9,16 +9,36 @@ public class main {
 	static public void Main(string[] args) {
 		
 		List<Passenger> people;
+		List<Airport> airports = new List<Airport>();
 		if(args.Length > 0)
 			people = readCSV(args[0]);
 		else
 			people = getPassengers();
-		
+
+		Console.WriteLine("--------------------------------");		
+		Console.WriteLine("PASSENGERS");		
+		Console.WriteLine("--------------------------------");		
 		foreach (Passenger p in people) {
-			Console.WriteLine(p);
+			Console.WriteLine("\t" + p);
 		} 
+
+		airports = getAirports(people, airports);
+
+		Console.WriteLine("--------------------------------");		
+		Console.WriteLine("AIRPORTS");		
+		Console.WriteLine("--------------------------------");		
+		foreach (Airport port in airports) {
+			Console.WriteLine(port);
+		}
 	}
 
+    /*---------------------------------------------------------
+     * Method: readCSV
+     *
+     * Purpose: Reads in passengers via CSV file
+     *
+     * Returns: List of Passenger objects
+     *--------------------------------------------------------*/
 	static public List<Passenger> readCSV(string filename) {
 
 		List<Passenger> people = new List<Passenger>();
@@ -39,6 +59,13 @@ public class main {
 		return people;
 	}
 
+    /*---------------------------------------------------------
+     * Method: getPassengers
+     *
+     * Purpose: Reads in passengers via keyboard input
+     *
+     * Returns: List of Passenger objects
+     *--------------------------------------------------------*/
 	static public List<Passenger> getPassengers() {
 		List<Passenger> people = new List<Passenger>();
 
@@ -83,6 +110,50 @@ public class main {
 		Console.WriteLine("** GENERATING ITINERARY **");
 		return people;
 	}
-}
 
+    /*---------------------------------------------------------
+     * Method: getAiports
+     *
+     * Purpose: Generates the list of airports needed by passengers
+     *
+     * Returns: List of relevant Airport objects
+     *--------------------------------------------------------*/
+	static public List<Airport> getAirports(List<Passenger> people, List<Airport> airports) {
+		foreach (Passenger p in people) {
+			bool depart = false;
+			bool arrive = false;
+			/*----------------------------------
+			 * First check to see if the 
+			 * airport has already been found.
+			-----------------------------------*/
+			foreach (Airport port in airports) {
+				if(p.origin.city == port.position.city && p.origin.state == port.position.state) {
+					port.departing.Add(p);
+					depart = true;
+				}
+				if(p.destination.city == port.position.city && p.destination.state == port.position.state) {
+					port.arriving.Add(p);
+					arrive = true;
+				}
+			}
+			/*----------------------------------
+			 * If it was not found,
+			 * find it and add to list.
+			-----------------------------------*/
+			if(!depart) {
+				Airport a = Geolocator.findNearestAirport(p.origin);
+				a.departing.Add(p);
+				airports.Add(a);
+			}
+			if(!arrive) {
+				Airport a = Geolocator.findNearestAirport(p.destination);
+				a.arriving.Add(p);
+				airports.Add(a);
+			}
+		}
+		return airports;
+
+	}
+
+}
 

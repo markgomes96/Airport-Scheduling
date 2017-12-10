@@ -25,5 +25,20 @@ public class Airport {
 		this.lighted = false;
 	}
 
+	public override string ToString() {	
+		string result = this.name + " | ";
+		result += this.position.latitude + ", " + this.position.longitude + " | ";
+		result += "Lit: " + this.lighted;
+		result += "\n\tPassengers departing: ";
+		foreach (Passenger p in this.departing) {
+			result += p.firstname + " " + p.lastname + ", ";
+		}
+		result += "\n\tPassengers arriving: ";
+		foreach (Passenger p in this.arriving) {
+			result += p.firstname + " " + p.lastname + ", ";
+		}
+		return result;
+	}
+
 }
 
