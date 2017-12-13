@@ -123,6 +123,70 @@ public class Geolocator {
 		return new Location((latSum/count), (longSum/count), city, statecode);
 	}
 
+	/*---------------------------------------------------------
+	 * Method: CreateAirportDatabase
+	 *
+	 * Purpose: Find all usable airports
+	 *
+	 * Returns: A list of all usable airport objects
+	 *--------------------------------------------------------*/
+/*	public static List<Airport> CreateAirportDatabase()
+	{
+		List<Airport> apdb = new List<Airport>();    //list of airport objects to store all usable airports
+
+		string url_airports = "http://theochem.mercer.edu/csc330/data/airports.csv";
+		WebReader wr = new WebReader(url_airports);              //reads in the airport file
+		string line = wr.getLine();
+		String[] apdata;
+
+		while(line != null)       //iterates through the airport file
+		{
+			line = line.Replace('"',' ');        //manipulates the data by splitting it up into an array
+			apdata = line.Split(',');
+			//Goes through multiple checks so only relavent data is processed
+			if(apdata[8].Trim().Equals("US", StringComparison.Ordinal) || apdata[8].Trim().Equals("PR", StringComparison.Ordinal) || apdata[8].Trim().Equals("AS", StringComparison.Ordinal))
+			{
+				if(apdata[2].Trim().Equals("small_airport", StringComparison.Ordinal) || apdata[2].Trim().Equals("large_airport", StringComparison.Ordinal))
+				{
+					if(apdata[11].Trim().Equals("no", StringComparison.Ordinal))
+					{
+						//adds a new airport object with all relevant data from airport file
+						apdb.Add(new Airport(Int32.Parse(apdata[0].Trim()), apdata[3].Trim(), Convert.ToDouble(apdata[4].Trim()), Convert.ToDouble(apdata[5].Trim()), 
+									apdata[8].Trim(), apdata[9].Substring(4,2), apdata[10].Trim(), apdata[12].Trim(), 0, " ", 0));
+					}
+				}
+			}
+			line = wr.getLine();
+		}
+
+		string url_runways = "http://theochem.mercer.edu/csc330/data/runways.csv";
+		wr = new WebReader(url_runways);        //reads in the runway file
+		line = wr.getLine();    line = wr.getLine();      //skips header line
+		int index = -1;
+
+		while(line != null)       //iterates throught runway file
+		{
+			line = line.Replace('"',' ');
+			apdata = line.Split(',');
+			index = apdb.FindIndex(x => x.Id == Int32.Parse(apdata[1].Trim()));    //check if runway Id matches any airport Id
+			if(index != -1)
+			{
+				//adds relevant data from runway file to objects created from airport file
+				apdb[index].RW_length = Int32.Parse(apdata[3].Trim());
+				apdb[index].RW_surface = apdata[5].Trim();
+				apdb[index].Lighted = Int32.Parse(apdata[6].Trim());
+			}
+			line = wr.getLine();
+		}
+
+		for(int i = 0; i < apdb.Count; i++)        //displays all airport objects and some of their data
+		{
+			Console.WriteLine(i + " : " + apdb[i].Name + " : " + apdb[i].Country + " : " + apdb[i].State + " : " + apdb[i].RW_length);
+		}
+		return apdb;
+	}
+*/
+
 }
 
 public struct Location {
