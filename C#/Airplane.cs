@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public class Airplane {
 
@@ -7,7 +8,7 @@ public class Airplane {
 	public double distance, fuel;
 	public double timeElapsed;
 	public double rate, cost;
-	public Passenger[] passengers;
+	public List<Passenger> passengers;
 	public Location position;
 
 	public Airplane(Location start) {
@@ -17,7 +18,8 @@ public class Airplane {
 		this.distance = 0;
 		this.fuel = 3000;
 		this.rate = 2.75;
-		this.passengers = new Passenger[10];
+		this.timeElapsed = 0;
+		this.passengers = new List<Passenger>();
 		this.position = start;
 	}
 
@@ -55,6 +57,7 @@ public class Airplane {
 		this.fuel -= difference;
 		this.distance += difference;
 		this.cost += difference*rate;
+		this.timeElapsed += difference/speed;
 		this.position = dest;
 		return true;
 	}
@@ -67,7 +70,7 @@ public class Airplane {
 	 * Returns: true if the passenger will fit
 	 *          false if the plane is already full
 	 *--------------------------------------------------------*/
-	public bool addPassenger(Passenger p) {
+/*	public bool addPassenger(Passenger p) {
 		for(int i = 0; i < 10; i++) {
 			if(this.passengers[i] == null) {
 				this.passengers[i] = p;
@@ -82,12 +85,25 @@ public class Airplane {
 	 *
 	 * Purpose: remove all passengers who have arrived at dest
 	 *--------------------------------------------------------*/
-	public void unload() {
+/*	public void unload() {
 		for(int i = 0; i < 10; i++) {
 			if(this.passengers[i].destination.city == this.position.city)
 				if(this.passengers[i].destination.state == this.position.state)
 					this.passengers[i] = null;
 		}
 	}
+*/
 
+
+	public override string ToString() {
+		string result = "Plane at: " + this.position.latitude + ", " + this.position.longitude + "\n";
+		result += "Fuel remaining: " + this.fuel  + "\n";
+		result += "Distance travelled: " + this.distance  + "\n";
+		result += "Time elapsed: " + this.timeElapsed  + "\n";
+		result += "Plane contains:\n";
+		foreach(Passenger p in passengers) {
+			result += p.firstname + ", ";
+		}
+		return result;
+	}
 }
