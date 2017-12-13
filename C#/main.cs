@@ -93,7 +93,7 @@ public class main {
 			Console.WriteLine(airplane);
 		}
 
-		Console.WriteLine("PROFIT = " + (MONIES - airplane.cost));
+		Console.WriteLine("PROFIT = $" + Math.Round(MONIES - airplane.cost,2));
 
 	}
 
