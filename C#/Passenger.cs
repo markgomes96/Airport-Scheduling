@@ -26,16 +26,16 @@ public class Passenger {
 		this.lastname = l;
 		this.origin = Geolocator.findCoords(c0, s0);
 		this.destination = Geolocator.findCoords(c1, s1);
-		this.distance = Geolocator.getDistance(this.origin, this.destination);
-		this.price = this.distance*1.25;
+		this.distance = Math.Round(Geolocator.getDistance(this.origin, this.destination),2);
+		this.price = Math.Round(this.distance*1.25,2);
 	}
 	public Passenger(string f, string l, Location opos, Location dpos) {
 		this.firstname = f;
 		this.lastname = l;
 		this.origin = opos;
 		this.destination = dpos;
-		this.distance = Geolocator.getDistance(this.origin, this.destination);
-		this.price = this.distance*1.25;
+		this.distance =  Math.Round(Geolocator.getDistance(this.origin, this.destination),2);
+		this.price =  Math.Round(this.distance*1.25,2);
 	}
 
 	public override string ToString() {
