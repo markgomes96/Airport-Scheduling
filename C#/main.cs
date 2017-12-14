@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 
 
 public class main {
@@ -34,66 +33,77 @@ public class main {
 		}
 
 
+		// get the starting airport
 		Airport next = airports[0];
 		foreach(Airport port in airports) {
 			if(port.departing.Count > next.departing.Count) {
 				next = port;
 			}
 		}
-		Console.WriteLine("STARTING AIRPORT:");
-		Console.WriteLine(next);
+		Console.WriteLine("STARTING AIRPORT: " + next.name);
+
+		// instantiate plane at the starting airport
 		Airplane airplane = new Airplane(next.position);
-		foreach(Passenger p in next.departing) {
-			airplane.passengers.Add(p);
-			MONIES += p.price;
-		}
-		next.departing.Clear();
-		Console.WriteLine(airplane);
 
+		Console.WriteLine("--------------------------------");		
+		Console.WriteLine("ITINERARY");		
+		Console.WriteLine("--------------------------------");		
+		while(airplane.timeElapsed < 15 && airports.Count > 0) {// && airplane.passengers.Count>0) {
 
-		while(airplane.timeElapsed < 15 && airplane.passengers.Count>0) {
-	
-			double distance = 3000;
-			foreach(Airport port in airports) {
-				double tmp =Geolocator.getDistance(next.position, port.position);
-			 	List<Passenger> common = checkItBeach(port.arriving, airplane.passengers);
-				if(tmp > 0 && tmp < distance && (common.Count > 0 || port.departing.Count > 0)) {
-					next = port;
-					distance = tmp;
-				}
+			// add new passengers
+			for(int i = 0; i < next.departing.Count; i++) {
+				airplane.passengers.Add(next.departing[i]);
+				Console.WriteLine("\tBoarding: " + next.departing[i].firstname);
+				next.departing.Remove(next.departing[i]);
+				i--;
 			}
-	
-			Console.WriteLine("NEXT AIRPORT:");
-			Console.WriteLine(next);
-			Console.WriteLine("MOVING AIRPLANE!!!");
-			airplane.travel(next.position);
 
 			// kick out passengers
 			for(int i = 0; i < next.arriving.Count; i++) {
 				if(airplane.passengers.Contains(next.arriving[i])) {
 					airplane.passengers.Remove(next.arriving[i]);
+					Console.WriteLine("\tUnloading: " + next.arriving[i].firstname);
+					MONIES += next.arriving[i].price;
 					next.arriving.Remove(next.arriving[i]);
 					i--;
 				}
 			}
 
-			// add new passengers
-			for(int i = 0; i < next.departing.Count; i++) {
-				airplane.passengers.Add(next.departing[i]);
-				MONIES += next.departing[i].price;
-				next.departing.Remove(next.departing[i]);
-				i--;
-			}
+			// print status of plane
+			Console.WriteLine(airplane);
 
 			// remove useless airports
 			if(next.arriving.Count < 1 && next.departing.Count < 1) {
 				airports.Remove(next);
 			}
 
-			Console.WriteLine(airplane);
+			// pick and travel to the next airport
+			Airport current = next;
+			double distance = 3000;
+			foreach(Airport port in airports) {
+				double tmp = Geolocator.getDistance(current.position, port.position);
+			 	List<Passenger> common = checkItBeach(port.arriving, airplane.passengers);
+				if(tmp > 0 && tmp < distance && (common.Count > 0 || port.departing.Count > 0)) {
+					next = port;
+					distance = tmp;
+				}
+			}
+
+			if(next != current) {	
+				Console.WriteLine("GOING TO --> " + next.position.city + ", " + next.position.state + " | " + next.name + " at " + next.position.latitude + ", " + next.position.longitude);
+				Console.WriteLine(distance + " miles away");
+				airplane.travel(next.position);
+			}
+	
 		}
 
-		Console.WriteLine("PROFIT = $" + Math.Round(MONIES - airplane.cost,2));
+		Console.WriteLine("--------------------------------");		
+		Console.WriteLine("RESULTS");		
+		Console.WriteLine("--------------------------------");
+		Console.WriteLine(airplane);
+		Console.WriteLine("INCOME = " + MONIES);
+		Console.WriteLine("LOSS = " + airplane.cost);
+		Console.WriteLine("PROFIT = " + (MONIES - airplane.cost));
 
 	}
 

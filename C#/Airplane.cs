@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Airplane {
 
-	public int landingTime, refuelTime;
+	public double landingTime, refuelTime;
 	public double speed;
 	public double distance, fuel;
 	public double timeElapsed;
@@ -12,8 +12,8 @@ public class Airplane {
 	public Location position;
 
 	public Airplane(Location start) {
-		this.landingTime = 30;
-		this.refuelTime = 15;
+		this.landingTime = 0.5;
+		this.refuelTime = 0.25;
 		this.speed = 515;
 		this.distance = 0;
 		this.fuel = 3000;
@@ -52,13 +52,15 @@ public class Airplane {
 	 *--------------------------------------------------------*/
 	public bool travel(Location dest) {
 		double difference = Geolocator.getDistance(this.position, dest);
-		if(this.fuel - difference < 0)
-			return false;
+		if(this.fuel - difference < 0) {
+			this.refuel();
+		}
 		this.fuel -= difference;
 		this.distance += difference;
 		this.cost += difference*rate;
 		this.timeElapsed += difference/speed;
 		this.position = dest;
+		this.land();
 		return true;
 	}
 
@@ -97,10 +99,11 @@ public class Airplane {
 
 	public override string ToString() {
 		string result = "Plane at: " + this.position.latitude + ", " + this.position.longitude + "\n";
-		result += "Fuel remaining: " + this.fuel  + "\n";
-		result += "Distance travelled: " + this.distance  + "\n";
-		result += "Time elapsed: " + this.timeElapsed  + "\n";
-		result += "Plane contains:\n";
+		result += "\tFuel remaining: " + this.fuel  + "\n";
+		result += "\tDistance travelled: " + this.distance  + "\n";
+		result += "\tTime elapsed: " + this.timeElapsed  + "\n";
+		result += "\tTotal cost: " + this.cost  + "\n";
+		result += "\tPlane contains:\n\t\t";
 		foreach(Passenger p in passengers) {
 			result += p.firstname + ", ";
 		}
